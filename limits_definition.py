@@ -3,3 +3,7 @@ MAX_TEMP = 45
 MIN_SOC = 20
 MAX_SOC = 80
 MAX_CHARGE_RATE = 0.8
+min_values = MIN_TEMP, MIN_SOC , 0
+max_values = MAX_TEMP, MAX_SOC , MAX_CHARGE_RATE
+Parameter_count = 3
+Parameter_list =  ("Temparature","SOC","ChargeRate")
