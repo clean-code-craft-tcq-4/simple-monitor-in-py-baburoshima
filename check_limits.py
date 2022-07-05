@@ -8,7 +8,7 @@ def battery_is_ok(parameters):
 def Is_batteryparams_minlimit_ok(parameters):
   for item in range(limits.Parameter_count):
     if parameters[item] <= limits.min_values[item]:
-      print("FAIL :"+ parameters[item+limits.Parameter_count] + " less than min range!" )
+      print("FAIL :"+ parameters[item+limits.Parameter_count] + " less than Min range!" )
       return False
   print("All parameters above min range")
   return True
@@ -16,9 +16,9 @@ def Is_batteryparams_minlimit_ok(parameters):
 def Is_batteryparams_maxlimit_ok(parameters):
   for item in range(limits.Parameter_count):
     if parameters[item] >= limits.max_values[item]:
-      print("FAIL :"+ parameters[item+limits.Parameter_count] + " Greater than Max range!")
+      print("FAIL :"+ parameters[item+limits.Parameter_count] + " greater than Max range!")
       return False 
-  print("All parameters with max range")
+  print("All parameters within max range")
   return True
 
 if __name__ == '__main__':
