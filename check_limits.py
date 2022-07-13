@@ -1,18 +1,41 @@
+import limits_definition as limits
+import test_check_limits as test
+import Display_messages as messages
 
-def battery_is_ok(temperature, soc, charge_rate):
-  if temperature < 0 or temperature > 45:
-    print('Temperature is out of range!')
-    return False
-  elif soc < 20 or soc > 80:
-    print('State of Charge is out of range!')
-    return False
-  elif charge_rate > 0.8:
-    print('Charge rate is out of range!')
-    return False
+def battery_is_ok(parameters,Language):
+  parameters = parameters + limits.Parameter_name #append name of parameters
+  battery_status = Is_batteryparams_lowlimit_ok(parameters,Language) and Is_batteryparams_highlimit_ok(parameters,Language)
+  return battery_status
 
+def Is_batteryparams_lowwarninglimit_ok(parameters,Language):
+  for item in range(limits.Parameter_count):
+    if parameters[item] <= limits.Low_warning_values[item]:
+      messages.Warning_Message(parameters[item+limits.Parameter_count],Language,limits.LOW)
+      return False
   return True
 
+def Is_batteryparams_lowlimit_ok(parameters,Language):
+  for item in range(limits.Parameter_count):
+    if parameters[item] <= limits.Low_Breach_values[item]:
+      messages.Breach_Message(parameters[item+limits.Parameter_count],Language,limits.LOW)
+      return False
+  Is_batteryparams_lowwarninglimit_ok(parameters,Language)
+  return True
+
+def Is_batteryparams_highlimit_ok(parameters,Language):
+  for item in range(limits.Parameter_count):
+    if parameters[item] >= limits.High_Breach_values[item]:
+      messages.Breach_Message(parameters[item+limits.Parameter_count],Language,limits.HIGH)
+      return False
+  Is_batteryparams_highwarninglimit_ok(parameters,Language)
+  return True
+
+def Is_batteryparams_highwarninglimit_ok(parameters,Language):
+  for item in range(limits.Parameter_count):
+    if parameters[item] >= limits.High_Warning_values[item]:
+      messages.Warning_Message(parameters[item+limits.Parameter_count],Language,limits.HIGH)
+      return False
+  return True
 
 if __name__ == '__main__':
-  assert(battery_is_ok(25, 70, 0.7) is True)
-  assert(battery_is_ok(50, 85, 0) is False)
+  test.check_limits_test()
